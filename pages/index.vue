@@ -61,7 +61,7 @@ function popup() {
             <div class="row">
 
               <h2 class="d-flex justify-content-around align-self-start">Lista</h2>
-              <div id="lista" class="d-flex align-self-start justify-content-center">
+              <div id="lista" class="d-flex flex-column align-self-start justify-content-center">
 
                 <Lista
                     v-for="(item, index) in items"
@@ -98,9 +98,6 @@ function popup() {
 main {
   min-height: 100vh;
 }
-
-
-
 #blok {
 
   background-color: #6797c4;

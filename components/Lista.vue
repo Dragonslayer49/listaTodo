@@ -44,9 +44,12 @@ ul {
   text-align: center;
   padding: 1rem;
   width: 100%;
+  background-color:black;
+
 }
 
 li {
   width: 100%;
+  background-color:white;
 }
 </style>
