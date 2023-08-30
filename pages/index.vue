@@ -1,9 +1,9 @@
 <script setup lang="js">
 import {ref} from 'vue'
-const editMode=ref(false);
+
 const {$bootstrap} = useNuxtApp();
 const modalElement = ref();
-const modalisko =ref();
+const modalisko = ref();
 const nuxtApp = useNuxtApp();
 let id = 0;
 const tekst = ref()
@@ -28,36 +28,24 @@ function dodaj() {
       console.log("nie");
     }
   }
-}
+}       //DODAJE NOWY TEKST DO ARRAYA ITEMS
 
-
-function trybedycji() {
-
-}
-let x="pozycja na liscie zostala przejeta"
-function edytuj(index, tekst) {
-// items.value.set(item,text: x.value);
-  items.value.vm.$set(index,tekst)
-  editMode.value=false;
-}
-
-function usun(item) {
-  let spliced = items.value.splice(item, 1);
-
+function edytujItemy(index,zmien) {
+  items.value[index].text=zmien;
 }
 
 function popup() {
   console.log("dzien dobry");
-  modalisko.value = new nuxtApp.$bootstrap.Modal(modalElement.value, {
-  });
+  modalisko.value = new nuxtApp.$bootstrap.Modal(modalElement.value, {});
 
   modalisko.value.show();
 
-}
+}       //MA POKAZYWAC MODALISKO ALE NIE DZIALA JESZCZE
 </script>
 
 <template>
-<Modalisko ref="modalElement"/>
+  <Modalisko ref="modalElement"/>      <!--modalisko sie jeszcze nie pokazue-->
+
   <main>
 
     <div class="text-primary justify-content-around d-flex">
@@ -72,51 +60,29 @@ function popup() {
           <div class="containter">
             <div class="row">
 
-                <h2 class="d-flex justify-content-around align-self-start">Lista</h2>
-                <div id="lista" class="d-flex align-self-start justify-content-center">
+              <h2 class="d-flex justify-content-around align-self-start">Lista</h2>
+              <div id="lista" class="d-flex align-self-start justify-content-center">
 
-                  <ul>
-<div v-if="editMode">
-  <form @submit.prevent="zmien">
+                <Lista
+                    v-for="(item, index) in items"
+                    :key="item.id"
+                    :napis="item.text"
+                    @usun="items.splice(index, 1)"
+                    @edytuj="(zmien)=>edytujItemy(index,zmien)"
+                />                                                                  <!--LISTA-->
 
-    <input v-model="zmienic" type="text"/>
-
-  </form>
-  <button type="button" @click=edytuj(index,zmienic) class="btn btn-outline-info">zapisz</button>
-
-  <button type="button" @click="editMode = false" class="btn btn-outline-danger">anuluj</button>
-</div>
-                    <div v-else>
-                    <li :key="index" v-for="(item,index,id) in items">
-                      {{ item.text }}-{{ index }}
-
-                      <br>
-                      <button type="button" @click="editMode=true" class="btn btn-outline-info">edytuj</button>
-
-                      <button type="button" @click=usun(index) class="btn btn-outline-danger">usun</button>
-
-                    </li>
-                      <Lista
-                      v-for="(item, index) in items"
-                      :key="item.id"
-                      :napis="item.text"
-                      @remove="items.splice(index, 1)"
-                      />
-                    </div>
-
-                  </ul>
-                </div>
+              </div>
 
 
-                <div id="dolnyBar" class="d-flex  align-self-end justify-content-center">
-                  <form @submit.prevent="dodaj">
+              <div id="dolnyBar" class="d-flex  align-self-end justify-content-center">
+                <form @submit.prevent="dodaj">
 
-                    <input v-model="tekst" type="text"/>
+                  <input v-model="tekst" type="text"/>
 
-                    <h4>dodaj cos do listy</h4>
+                  <h4>dodaj cos do listy</h4>
 
-                  </form>
-                </div>
+                </form>
+              </div>       <!--input nowego tekstu do arraya items-->
 
 
             </div>
@@ -133,16 +99,7 @@ main {
   min-height: 100vh;
 }
 
-ul {
-  list-style-type: none;
-  text-align: center;
-  padding: 1rem;
-  width: 100%;
-}
 
-li {
-  width: 100%;
-}
 
 #blok {
 
