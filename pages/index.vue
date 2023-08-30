@@ -100,7 +100,7 @@ main {
 }
 #blok {
 
-  background-color: #6797c4;
+  background-color: #648eb6;
   min-width: 30rem;
   min-height: 40rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

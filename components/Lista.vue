@@ -50,6 +50,6 @@ ul {
 
 li {
   width: 100%;
-  background-color:white;
+  background-color: #b1c7da;
 }
 </style>
