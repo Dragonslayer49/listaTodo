@@ -1,55 +1,60 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-defineProps(['napis'])
+const props =defineProps(['napis','items'])
 const zmienic = ref()
-const emit = defineEmits(['usun','edytuj'])
+const zmien=ref()
+const zrobiony=ref(props.napis)
+const emit = defineEmits(['usun','edytuj','Doneitems'])
 
 const editMode = ref(false);
 function Edycja(){
-  emit('edytuj',{zmienic})
+  zmien.value=zmienic.value;
+  emit('edytuj',zmien)
   editMode.value=false;
+  zmienic.value=null;
+}
+function doDone(){
+
+  emit('Doneitems',zrobiony);
 }
 </script>
 
 <template>
-  <ul>
     <div v-if="editMode==true">
       <form @submit.prevent="zmien">
 
         <input v-model="zmienic" type="text"/>
 
       </form>
-      <button type="button" @click="Edycja()" class="btn btn-outline-info">zapisz</button>
+      <div v-if="zmienic!=null">
+      <button type="button" @click="Edycja()" class="btn btn-outline-info">Save</button>
+        <button type="button" @click="editMode=!editMode" class="btn btn-outline-danger">Cancel</button>
+      </div>
+      <div v-else>
+        <button type="button" @click="Edycja()" class="btn btn-outline-info" disabled>Save</button>
+        <button type="button" @click="editMode=!editMode" class="btn btn-outline-danger">Cancel</button>
+      </div>
 
-      <button type="button" @click="editMode=!editMode" class="btn btn-outline-danger">anuluj</button>
     </div>
     <div v-else>
+
       <li>
         {{ napis }}
 
         <br>
-        <button type="button" @click="editMode=true" class="btn btn-outline-info">edytuj</button>
-
-        <button type="button" @click="emit('usun')" class="btn btn-outline-danger">usun</button>
+        <button type="button" @click="editMode=true" class="btn btn-outline-info">Edit</button>
+        <button type="button" @click="doDone" class="btn btn-outline-success">Done</button>
+        <button type="button" @click="emit('usun')" class="btn btn-outline-danger">Delete</button>
       </li>
     </div>
-  </ul>
 
 </template>
 
 <style scoped>
-ul {
-  list-style-type: none;
-  text-align: center;
-  padding: 1rem;
-  width: 100%;
-  background-color:black;
-
-}
 
 li {
   width: 100%;
-  background-color: #b1c7da;
 }
+
 </style>

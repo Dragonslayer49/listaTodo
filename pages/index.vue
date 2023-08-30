@@ -1,14 +1,22 @@
 <script setup lang="js">
 import {ref} from 'vue'
+import draggable from 'vuedraggable';
 
 const {$bootstrap} = useNuxtApp();
 const modalElement = ref();
 const modalisko = ref();
+const pokazskonczone = ref(false);
 const nuxtApp = useNuxtApp();
 let id = 0;
 const tekst = ref()
-const items = ref([{id: id++, text: 'jeden'}, {id: id++, text: 'dwa'}, {id: id++, text: "trzy"}])
+const items = ref([{id: id++, text: 'One'}, {id: id++, text: 'Two'}, {id: id++, text: "Three"}])
+const Doneitems=ref([{id: id++,text:'wyniesc smieci'},{id: id++,text:'posprzatac dom'},{id: id++,text:'dodac wiecej rzeczy do donelist'}])
 
+function DoDone(zrobione){
+  Doneitems.value.push({id: id++,text: zrobione.value})
+  usun.items.value.splice()
+  zrobione.value = null;
+}
 function dodaj() {
   const czyjest = items.value.filter((i) => i.text === tekst.value);
   if (czyjest.length) {
@@ -28,10 +36,15 @@ function dodaj() {
       console.log("nie");
     }
   }
+  let i = 0;
+  for (i; i < items.value.length; i++) {
+    console.log(items.value[i].text);
+  }
 }       //DODAJE NOWY TEKST DO ARRAYA ITEMS
 
-function edytujItemy(index,zmien) {
-  items.value[index].text=zmien;
+function edytujItemy(index, zmien) {
+  items.value[index].text = zmien;
+
 }
 
 function popup() {
@@ -48,65 +61,152 @@ function popup() {
 
   <main>
 
-    <div class="text-primary justify-content-around d-flex">
+    <div class="d-flex w-100 position-relative">
 
-      <h1>WITAJ</h1></div>
-    <hr>
+      <div id="welcome" class="">
+        <h1 id="welcomeText">WELCOME</h1>
+      </div>
+      <div class="align-self-end">
+        <button type="button" class="btn btn-outline-info" @Click="pokazskonczone=true"><b>Zapisz<br/>notatki</b>
+        </button>
+      </div>
+    </div>
+
+
     <div class="row">
-      <div id="NaSrodek" class="d-flex justify-content-around align-items-center col-12 h-100">
-        <div id="blok" class="text-light h-100">
+      <div id="NaSrodek" class="d-flex justify-content-around align-items-center col-6 h-100">
+        <div id="blok" class="d-flex flex-column text-light">
 
 
-          <div class="containter">
-            <div class="row">
+          <h2 class="align-self-center">List</h2>
+          <div id="lista" class="d-flex flex-column">
+            <ul>
+              <Lista
+                  v-for="(item, index) in items"
+                  :key="item.id"
+                  :napis="item.text"
+                  :items="items"
+                  @usun="items.splice(index, 1)"
+                  @edytuj="(zmien)=>edytujItemy(index,zmien)"
+                  @Doneitems="(zrobione)=>DoDone(zrobione)"
+              />                                                                  <!--LISTA-->
+            </ul>
+          </div>
 
-              <h2 class="d-flex justify-content-around align-self-start">Lista</h2>
-              <div id="lista" class="d-flex flex-column align-self-start justify-content-center">
 
-                <Lista
-                    v-for="(item, index) in items"
+
+          <draggable
+              :list="items"
+              tag="ul">
+            <template #item="{ element: napis }">
+              <li>
+                {{ napis.text}}
+              </li>
+            </template>
+          </draggable>                                            <!--draggable test-->
+
+
+
+          <div id="dolnyBar" class="d-flex align-self-center mt-auto">
+            <form @submit.prevent="dodaj">
+
+              <input v-model="tekst" type="text"/>
+
+              <h4>dodaj cos do listy</h4>
+
+            </form>
+          </div>       <!--input nowego tekstu do arraya items-->
+
+
+        </div>
+      </div>
+
+        <div id="done" class="d-flex justify-content-around align-items-center col-6 h-100">
+          <div id="blokDone" class="d-flex flex-column text-light">
+            <h2 class="align-self-center">Done</h2>
+            <div id="lista" class="d-flex flex-column">
+
+
+              <ul>
+
+
+                <DoneList
+                    v-for="(item, index) in Doneitems"
                     :key="item.id"
-                    :napis="item.text"
-                    @usun="items.splice(index, 1)"
-                    @edytuj="(zmien)=>edytujItemy(index,zmien)"
-                />                                                                  <!--LISTA-->
-
-              </div>
-
-
-              <div id="dolnyBar" class="d-flex  align-self-end justify-content-center">
-                <form @submit.prevent="dodaj">
-
-                  <input v-model="tekst" type="text"/>
-
-                  <h4>dodaj cos do listy</h4>
-
-                </form>
-              </div>       <!--input nowego tekstu do arraya items-->
+                    :napis="Doneitems.text"
+                    :items="Doneitems"
+                />
+              </ul>
 
 
             </div>
           </div>
         </div>
       </div>
-    </div>
+
   </main>
 
 </template>
 
 <style scoped>
+body {
+  font-family: sans-serif;
+}
+
 main {
   min-height: 100vh;
 }
+
+ul {
+  list-style-type: none;
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+
+}
+
+#welcomeText {
+
+
+  color: #edb7b7;
+}
+
+#welcome {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -30%);
+}
+
 #blok {
 
-  background-color: #648eb6;
+  background-color: #edb7b7;
   min-width: 30rem;
-  min-height: 40rem;
+  min-height: 30rem;
+  height: auto;
+
+
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+#blokDone {
+
+  background-color: #b7edc7;
+  min-width: 30rem;
+  min-height: 30rem;
+  height: auto;
+
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
 #NaSrodek {
+
+  min-height: calc(100vh - 89px);
+}
+
+#done {
 
   min-height: calc(100vh - 89px);
 }
