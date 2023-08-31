@@ -8,14 +8,15 @@ const modalisko = ref();
 const pokazskonczone = ref(false);
 const nuxtApp = useNuxtApp();
 let id = 0;
+let idd = 0;
 const tekst = ref()
 const items = ref([{id: id++, text: 'One'}, {id: id++, text: 'Two'}, {id: id++, text: "Three"}])
-const Doneitems=ref([{id: id++,text:'wyniesc smieci'},{id: id++,text:'posprzatac dom'},{id: id++,text:'dodac wiecej rzeczy do donelist'}])
+const Doneitems=ref([{idd: idd++,text:'wyniesc smieci'},{idd: idd++,text:'posprzatac dom'},{idd: idd++,text:'dodac wiecej rzeczy do donelist'}])
 
 function DoDone(zrobione){
-  Doneitems.value.push({id: id++,text: zrobione.value})
-  usun.items.value.splice()
-  zrobione.value = null;
+  Doneitems.value.push({idd: idd++,text: zrobione.value})
+  // usun.items.value.splice()
+  // zrobione.value = null;
 }
 function dodaj() {
   const czyjest = items.value.filter((i) => i.text === tekst.value);
@@ -81,29 +82,22 @@ function popup() {
           <h2 class="align-self-center">List</h2>
           <div id="lista" class="d-flex flex-column">
             <ul>
+              <draggable
+                  :list="items"
+              >
+                <template #item="{ element }">
               <Lista
-                  v-for="(item, index) in items"
-                  :key="item.id"
-                  :napis="item.text"
+                  :key="element.id"
+                  :napis="element.text"
                   :items="items"
                   @usun="items.splice(index, 1)"
                   @edytuj="(zmien)=>edytujItemy(index,zmien)"
                   @Doneitems="(zrobione)=>DoDone(zrobione)"
-              />                                                                  <!--LISTA-->
+              />
+                </template></draggable><!--LISTA-->
             </ul>
           </div>
 
-
-
-          <draggable
-              :list="items"
-              tag="ul">
-            <template #item="{ element: napis }">
-              <li>
-                {{ napis.text}}
-              </li>
-            </template>
-          </draggable>                                            <!--draggable test-->
 
 
 
@@ -128,14 +122,18 @@ function popup() {
 
 
               <ul>
-
+                <draggable
+                    :list="Doneitems"
+                >
+                  <template #item="{ element }">
 
                 <DoneList
-                    v-for="(item, index) in Doneitems"
-                    :key="item.id"
-                    :napis="Doneitems.text"
+                    :key="element.idd"
+                    :napis="element.text"
                     :items="Doneitems"
                 />
+                  </template>
+                </draggable>
               </ul>
 
 

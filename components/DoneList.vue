@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
-defineProps(['napis','items'])
-const emits=defineEmits([''])
+const prop=defineProps(['napis','items'])
+const emits=defineEmits(['item'])
 </script>
 
 <template>
-  <draggable
-      :list="items"
-  >
-    <template #item="{ element }">
+
       <li>
         <h4>
-          {{ element.text }}
+          {{ napis}}
         </h4>
       </li>
-    </template>
-  </draggable>
+
+
+
 
 
 
