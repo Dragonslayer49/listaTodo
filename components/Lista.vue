@@ -1,54 +1,65 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-const props =defineProps(['napis','items','ind'])
+const props = defineProps(['napis', 'items', 'ind'])
 const zmienic = ref()
-const zmien=ref()
-const zrobiony=ref(props.napis)
-const emit = defineEmits(['usun','edytuj','doneitems'])
+const zmien = ref()
+const zrobiony = ref(props.napis)
+const emit = defineEmits(['usun', 'edytuj', 'doneitems'])
 
 const editMode = ref(false);
-function Edycja(){
-  zmien.value=zmienic.value;
-  emit('edytuj',zmien)
-  zrobiony.value=zmienic.value;
-  editMode.value=false;
-  zmienic.value=null;
-}
-function doDone(){
 
-  emit('doneitems',zrobiony);
+function Edycja() {
+  zmien.value = zmienic.value;
+  emit('edytuj', zmien)
+  zrobiony.value = zmienic.value;
+  editMode.value = false;
+  zmienic.value = null;
+}
+
+function doDone() {
+
+  emit('doneitems', zrobiony);
 }
 </script>
 
 <template>
-    <div v-if="editMode==true">
-      <form @submit.prevent="zmien">
+  <div v-if="editMode==true">
+    <form @submit.prevent="zmien">
 
-        <input v-model="zmienic" type="text"/>
+      <input v-model="zmienic" type="text"/>
 
-      </form>
-      <div v-if="zmienic!=null">
+    </form>
+    <div v-if="zmienic!=null">
       <button type="button" @click="Edycja()" class="btn btn-outline-info">Save</button>
-        <button type="button" @click="editMode=!editMode" class="btn btn-outline-danger">Cancel</button>
-      </div>
-      <div v-else>
-        <button type="button" @click="Edycja()" class="btn btn-outline-info" disabled>Save</button>
-        <button type="button" @click="editMode=!editMode" class="btn btn-outline-danger">Cancel</button>
-      </div>
-
+      <button type="button" @click="editMode=!editMode" class="btn btn-outline-danger">Cancel</button>
     </div>
+
+
     <div v-else>
-
-      <li>
-        {{ napis }}
-
-        <br>
-        <button type="button" @click="editMode=true" class="btn btn-outline-info">Edit</button>
-        <button type="button" @click="doDone" class="btn btn-outline-success">Done</button>
-        <button type="button" @click="emit('usun')" class="btn btn-outline-danger">Delete</button>
-      </li>
+      <button type="button" @click="Edycja()" class="btn btn-outline-info" disabled>Save</button>
+      <button type="button" @click="editMode=!editMode" class="btn btn-outline-danger">Cancel</button>
     </div>
+
+  </div>
+  <div v-else class="d-flex">
+    <li>
+      <div class="list-group-item p-2" >
+      {{ napis }}
+    </div>
+
+
+
+
+
+
+
+
+<!--      <button type="button" @click="editMode=true" class="btn btn-outline-info">Edit</button>-->
+<!--      <button type="button" @click="doDone" class="btn btn-outline-success">Done</button>-->
+<!--      <button type="button" @click="emit('usun')" class="btn btn-outline-danger">Delete</button>-->
+    </li>
+  </div>
 
 </template>
 
@@ -56,6 +67,13 @@ function doDone(){
 
 li {
   width: 100%;
+}
+li:hover{
+  opacity:0.6;
+  background-color: rgba(238, 115, 115, 0.46);
+}
+.list-group-item{
+  cursor:grab;
 }
 
 </style>
