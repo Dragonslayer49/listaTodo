@@ -84,10 +84,12 @@ function popup() {
             <ul>
               <draggable
                   :list="items"
+                  item-key="id"
               >
-                <template #item="{ element }">
+                <template #item="{ element }"
+                >
+
               <Lista
-                  :key="element.id"
                   :napis="element.text"
                   :items="items"
                   @usun="items.splice(index, 1)"

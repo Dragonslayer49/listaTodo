@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-const props =defineProps(['napis','items'])
+const props =defineProps(['napis','items','ind'])
 const zmienic = ref()
 const zmien=ref()
 const zrobiony=ref(props.napis)
