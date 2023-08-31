@@ -5,8 +5,8 @@ const emits=defineEmits(['item'])
 </script>
 
 <template>
+      <li class="list-group-item">
 
-      <li>
         <h4>
           {{ napis}}
         </h4>
@@ -24,5 +24,12 @@ li {
 
   padding:1px;
   width: 100%;
+}
+.list-group-item {
+  cursor: grab;
+}
+
+.list-group-item i {
+  cursor: pointer;
 }
 </style>

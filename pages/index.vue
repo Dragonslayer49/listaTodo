@@ -2,6 +2,9 @@
 import {ref} from 'vue'
 import draggable from 'vuedraggable';
 
+
+
+
 const {$bootstrap} = useNuxtApp();
 const modalElement = ref();
 const modalisko = ref();
@@ -13,10 +16,13 @@ const tekst = ref()
 const items = ref([{id: id++, text: 'One'}, {id: id++, text: 'Two'}, {id: id++, text: "Three"}])
 const Doneitems=ref([{idd: idd++,text:'wyniesc smieci'},{idd: idd++,text:'posprzatac dom'},{idd: idd++,text:'dodac wiecej rzeczy do donelist'}])
 
-function DoDone(zrobione){
+function DoDone(zrobione,index){
   Doneitems.value.push({idd: idd++,text: zrobione.value})
-  // usun.items.value.splice()
+   usuni(index);
   // zrobione.value = null;
+}
+function usuni(index){
+  items.value.splice(index,1)
 }
 function dodaj() {
   const czyjest = items.value.filter((i) => i.text === tekst.value);
@@ -94,7 +100,7 @@ function popup() {
                   :items="items"
                   @usun="items.splice(index, 1)"
                   @edytuj="(zmien)=>edytujItemy(index,zmien)"
-                  @Doneitems="(zrobione)=>DoDone(zrobione)"
+                  @doneitems="(zrobione)=>DoDone(zrobione,index)"
               />
                 </template></draggable><!--LISTA-->
             </ul>
@@ -126,6 +132,7 @@ function popup() {
               <ul>
                 <draggable
                     :list="Doneitems"
+                    item-key="id"
                 >
                   <template #item="{ element }">
 

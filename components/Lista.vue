@@ -5,18 +5,19 @@ const props =defineProps(['napis','items','ind'])
 const zmienic = ref()
 const zmien=ref()
 const zrobiony=ref(props.napis)
-const emit = defineEmits(['usun','edytuj','Doneitems'])
+const emit = defineEmits(['usun','edytuj','doneitems'])
 
 const editMode = ref(false);
 function Edycja(){
   zmien.value=zmienic.value;
   emit('edytuj',zmien)
+  zrobiony.value=zmienic.value;
   editMode.value=false;
   zmienic.value=null;
 }
 function doDone(){
 
-  emit('Doneitems',zrobiony);
+  emit('doneitems',zrobiony);
 }
 </script>
 
