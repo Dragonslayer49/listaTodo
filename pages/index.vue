@@ -86,7 +86,7 @@ function popup() {
                   :list="items"
                   item-key="id"
               >
-                <template #item="{ element }"
+                <template #item="{ element,index }"
                 >
 
               <Lista
