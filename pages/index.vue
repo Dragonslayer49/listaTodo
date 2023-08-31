@@ -1,6 +1,5 @@
 <script setup lang="js">
 import {ref} from 'vue'
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import draggable from 'vuedraggable';
 
 
