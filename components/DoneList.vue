@@ -1,28 +1,20 @@
-<script setup lang="ts">
+<script setup lang="js">
 import draggable from "vuedraggable";
-const prop=defineProps(['napis','items'])
-const emits=defineEmits(['item'])
+const prop = defineProps(["napis", "items"]);
+const emits = defineEmits(["item"]);
 </script>
 
 <template>
-      <li class="list-group-item">
-
-        <h4>
-          {{ napis}}
-        </h4>
-      </li>
-
-
-
-
-
-
+  <li class="list-group-item">
+    <h4>
+      {{ napis }}
+    </h4>
+  </li>
 </template>
 
 <style scoped>
 li {
-
-  padding:1px;
+  padding: 1px;
   width: 100%;
 }
 .list-group-item {
