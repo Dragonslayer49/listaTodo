@@ -4,5 +4,7 @@ export default defineNuxtConfig({
       baseURL: "/",
     },
   devtools: { enabled: false },
-  css: ['~/assets/css/app.scss']
+  css: ['~/assets/css/app.scss',
+  "bootstrap-icons/font/bootstrap-icons.scss"]
+
 })

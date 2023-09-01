@@ -3,6 +3,7 @@ import {ref} from "vue";
 
 const props = defineProps(['napis', 'items', 'ind'])
 const zmienic = ref()
+const przyciski = ref(false)
 const zmien = ref()
 const zrobiony = ref(props.napis)
 const emit = defineEmits(['usun', 'edytuj', 'doneitems'])
@@ -42,22 +43,45 @@ function doDone() {
     </div>
 
   </div>
-  <div v-else class="d-flex">
-    <li>
-      <div class="list-group-item p-2" >
-      {{ napis }}
-    </div>
+  <div v-else>
+    <li class="text-start">
+      <div class="list-group-item p-2">
+
+        {{ napis }}
+        <button id="przyciskD" type="button" @click="emit('usun')" class="btn btn-sm btn-danger">
+          <i class="bi bi-x">
+          </i>
+        </button>
+        <div v-if="przyciski==false" class="d-flex justify-content-end">
+
+          <button type="button" @click="przyciski=!przyciski" class="btn btn-sm btn-primary">
+            <i class="bi bi-gear-fill">
+            </i>
+          </button>
+
+        </div>
+
+        <div v-else class="d-flex justify-content-end">
+
+          <button type="button" @click="editMode=true" class="btn btn-sm btn-dark">
+            <i class="bi bi-pencil-square">
+            </i>
+          </button>
+
+          <button type="button" @click="doDone" class="btn btn-sm btn-success">
+            <i class="bi bi-check">
+            </i>
+          </button>
+
+          <button type="button" @click="przyciski=!przyciski" class="btn btn-sm btn-primary">
+            <i class="bi bi-gear-fill">
+            </i>
+          </button>
+
+        </div>
+      </div>
 
 
-
-
-
-
-
-
-<!--      <button type="button" @click="editMode=true" class="btn btn-outline-info">Edit</button>-->
-<!--      <button type="button" @click="doDone" class="btn btn-outline-success">Done</button>-->
-<!--      <button type="button" @click="emit('usun')" class="btn btn-outline-danger">Delete</button>-->
     </li>
   </div>
 
@@ -68,12 +92,20 @@ function doDone() {
 li {
   width: 100%;
 }
-li:hover{
-  opacity:0.6;
-  background-color: rgba(238, 115, 115, 0.46);
+
+li:hover {
+  opacity: 0.95;
+  background-color: rgba(238, 115, 115, 0.43);
 }
-.list-group-item{
-  cursor:grab;
+
+.list-group-item {
+  cursor: grab;
+}
+#przyciskD{
+  opacity: 0;
+}
+#przyciskD:hover{
+  opacity:1;
 }
 
 </style>
