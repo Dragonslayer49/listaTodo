@@ -1,15 +1,18 @@
 <script setup lang="js">
 import { ref } from "vue";
 import draggable from "vuedraggable";
+import { id } from "postcss-selector-parser";
+import { indexOf } from "vuedraggable/dist/vuedraggable.common";
 
 const props = defineProps({
   title: String,
   items: { type: Array, required: true },
 });
+const emit = defineEmits(["donee"]);
 const edycja = ref(false);
 const tekst = ref();
-
-function dodaj(arr) {
+let idd = 0;
+function dodaj(arr, index) {
   const czyjest = arr.filter((i) => i.text === tekst.value);
   if (czyjest.length) {
     popup();
@@ -20,7 +23,7 @@ function dodaj(arr) {
   // }
   else {
     if (tekst.value != null) {
-      arr.push({ id: id++, text: tekst.value });
+      arr.push({ id: idd++, text: tekst.value });
       tekst.value = null;
     } else {
       console.log("nie");
@@ -30,25 +33,32 @@ function dodaj(arr) {
   for (i; i < arr.length; i++) {
     console.log(arr[i].text);
   }
-
   edycja.value = false;
 } //DODAJE NOWY TEKST DO ARRAYA
 function edytujItemy(index, zmien, arr) {
   arr[index].text = zmien;
 } //edytuje tekst
+
+function DoDone(zrobione, arr, index) {
+  console.log(zrobione.value);
+  emit("donee", zrobione);
+  arr.splice(index, 1);
+}
 </script>
 
 <template>
-  <div id="monday" class="col-1 dzientyg">
+  <div class="col-1 dzientyg">
     <h3 class="align-self-center dzien">{{ title }}</h3>
     <div id="lista" class="d-flex flex-column">
       <ul class="ulul">
-        <draggable :list="items" item-key="id">
+        <draggable :list="items" item-key="key">
           <template #item="{ element, index }">
             <Lista
               :napis="element.text"
+              :ind="element.id"
               @usun="items.splice(index, 1)"
               @edytuj="(zmien) => edytujItemy(index, zmien, items)"
+              @doneitems="(zrobione) => DoDone(zrobione, items, index)"
             />
           </template> </draggable
         ><!--LISTA-->
@@ -72,7 +82,7 @@ function edytujItemy(index, zmien, arr) {
             <button
               v-if="tekst == null"
               type="button"
-              @click="dodaj(items)"
+              @click="dodaj(items, index)"
               class="btn btn-sm btn-primary"
               disabled
             >

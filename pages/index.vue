@@ -85,6 +85,12 @@ function popup() {
 
   modalisko.value.show();
 } //MA POKAZYWAC MODALISKO ALE NIE DZIALA JESZCZE
+
+function dodajDone(zrobione) {
+  let i = 0;
+  console.log(zrobione.value);
+  Doneitems.value.push({ idd: idd++, text: zrobione.value });
+}
 </script>
 
 <template>
@@ -120,6 +126,7 @@ function popup() {
               :title="day.name"
               :key="index"
               :items="day.items"
+              @donee="(zrobione) => dodajDone(zrobione)"
             />
           </div>
         </div>

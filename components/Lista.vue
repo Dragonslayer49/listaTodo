@@ -5,7 +5,7 @@ const props = defineProps(["napis", "ind"]);
 const zmienic = ref();
 const przyciski = ref(false);
 const zmien = ref();
-const zrobiony = ref(props.napis);
+const dalej = ref(props.napis);
 const emit = defineEmits(["usun", "edytuj", "doneitems"]);
 
 const editMode = ref(false);
@@ -13,13 +13,13 @@ const editMode = ref(false);
 function Edycja() {
   zmien.value = zmienic.value;
   emit("edytuj", zmien);
-  zrobiony.value = zmienic.value;
   editMode.value = false;
   zmienic.value = null;
 }
 
 function doDone() {
-  emit("doneitems", zrobiony);
+  dalej.value = props.napis;
+  emit("doneitems", dalej);
 }
 </script>
 
@@ -63,6 +63,7 @@ function doDone() {
     <li class="text-start">
       <div class="list-group-item p-2">
         {{ napis }}
+        {{ ind }}
         <button
           id="przyciskD"
           type="button"
