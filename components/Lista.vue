@@ -111,11 +111,12 @@ function doDone() {
 <style scoped>
 li {
   width: 100%;
+  color: #001524;
 }
 
 li:hover {
   opacity: 0.95;
-  background-color: rgba(238, 115, 115, 0.43);
+  background-color: #8a6240;
 }
 
 .list-group-item {

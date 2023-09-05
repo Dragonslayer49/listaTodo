@@ -2,10 +2,11 @@
 import { ref } from "vue";
 import draggable from "vuedraggable";
 
+import { useListStore } from "@/store/dni.js";
+const done = useListStore(); //pinia
 const { $bootstrap } = useNuxtApp();
 const modalElement = ref();
 const modalisko = ref();
-const pokazskonczone = ref(false);
 const nuxtApp = useNuxtApp();
 let id = 0;
 let idd = 0;
@@ -13,69 +14,32 @@ let idd = 0;
 
 const WEEK = ref([
   {
-    name: "Monday",
-    items: [
-      { id: id++, text: "Onem" },
-      { id: id++, text: "Two" },
-      { id: id++, text: "Three" },
-    ],
+    name: "MONDAY",
+    items: [],
   },
   {
-    name: "Tuesday",
-    items: [
-      { id: id++, text: "Onet" },
-      { id: id++, text: "Two" },
-      { id: id++, text: "Three" },
-    ],
+    name: "TUESDAY",
+    items: [],
   },
   {
-    name: "Wednsday",
-    items: [
-      { id: id++, text: "Onew" },
-      { id: id++, text: "Two" },
-      { id: id++, text: "Three" },
-    ],
+    name: "WEDNSDAY",
+    items: [],
   },
   {
-    name: "Thursday",
-    items: [
-      { id: id++, text: "Oneth" },
-      { id: id++, text: "Two" },
-      { id: id++, text: "Three" },
-    ],
+    name: "THURDAY",
+    items: [],
   },
   {
-    name: "Friday",
-    items: [
-      { id: id++, text: "Onef" },
-      { id: id++, text: "Two" },
-      { id: id++, text: "Three" },
-    ],
+    name: "FRIDAY",
+    items: [],
   },
   {
-    name: "Saturday",
-    items: [
-      { id: id++, text: "Ones" },
-      { id: id++, text: "Two" },
-      { id: id++, text: "Three" },
-    ],
+    name: "SATURDAY",
+    items: [],
   },
   {
-    name: "Sunday",
-    items: [
-      { id: id++, text: "Onesu" },
-      { id: id++, text: "Two" },
-      { id: id++, text: "Three" },
-    ],
-  },
-]);
-
-const Doneitems = ref([
-  { idd: idd++, text: "wyniesc smieci" },
-  { idd: idd++, text: "posprzatac dom" },
-  {
-    idd: idd++,
-    text: "dodac wiecej rzeczy do donelist",
+    name: "SUNDAY",
+    items: [],
   },
 ]);
 
@@ -89,7 +53,8 @@ function popup() {
 function dodajDone(zrobione) {
   let i = 0;
   console.log(zrobione.value);
-  Doneitems.value.push({ idd: idd++, text: zrobione.value });
+
+  done.dodaj(zrobione);
 }
 </script>
 
@@ -99,33 +64,25 @@ function dodajDone(zrobione) {
   <main>
     <div class="d-flex w-100 position-relative">
       <div id="welcome" class="">
-        <h1 id="welcomeText">WELCOME</h1>
+        <h1 id="welcomeText">MAM PLAN</h1>
       </div>
       <div class="align-self-end">
-        <button
-          type="button"
-          class="btn btn-outline-info"
-          @Click="pokazskonczone = true"
-        >
+        <button type="button" class="btn btn-outline-info" @Click="">
           <b>Zapisz<br />notatki</b>
         </button>
       </div>
     </div>
 
     <div class="row">
-      <div
-        id="NaSrodek"
-        class="d-flex justify-content-around align-items-center col-12 h-100"
-      >
+      <div id="NaSrodek" class="d-flex col-10 h-100 p-5">
         <div id="blok" class="d-flex flex-column text-light">
-          <h2 class="align-self-center">List</h2>
-
-          <div class="row p-3">
+          <div class="row p-5 justify-content-around">
             <Dzien
               v-for="(day, index) in WEEK"
               :title="day.name"
               :key="index"
               :items="day.items"
+              :index="index"
               @donee="(zrobione) => dodajDone(zrobione)"
             />
           </div>
@@ -134,18 +91,18 @@ function dodajDone(zrobione) {
 
       <div
         id="done"
-        class="d-flex justify-content-around align-items-center col-12 h-100"
+        class="d-flex justify-content-around align-items-center col-1 h-100"
       >
         <div id="blokDone" class="d-flex flex-column text-light">
           <h2 class="align-self-center">Done</h2>
           <div id="lista" class="d-flex flex-column">
             <ul>
-              <draggable :list="Doneitems" item-key="id">
+              <draggable :list="done.Doneitems" item-key="id">
                 <template #item="{ element }">
                   <DoneList
                     :key="element.idd"
                     :napis="element.text"
-                    :items="Doneitems"
+                    :items="done.Doneitems"
                   />
                 </template>
               </draggable>
@@ -158,16 +115,14 @@ function dodajDone(zrobione) {
 </template>
 
 <style scoped>
-body {
-  font-family: sans-serif;
-}
-
 main {
   min-height: 100vh;
+  font-family: sans-serif;
+  background-color: #caba9c;
 }
 
 #welcomeText {
-  color: #edb7b7;
+  color: #5e3023;
 }
 
 #welcome {
@@ -178,7 +133,7 @@ main {
 }
 
 #blok {
-  background-color: #edb7b7;
+  background-color: #445d48;
   min-height: 80%;
   height: auto;
   min-width: 90%;
@@ -191,7 +146,7 @@ main {
 
 #blokDone {
   background-color: #b7edc7;
-  min-width: 30rem;
+  min-width: 20rem;
   min-height: 30rem;
   height: auto;
 
@@ -211,35 +166,4 @@ main {
 #lista {
   column-count: auto;
 }
-
-/*
-#monday {
-  background-color: cyan;
-}
-
-#tuesday {
-  background-color: #008cff;
-}
-
-#wednsday {
-  background-color: #8400ff;
-}
-
-#thurday {
-  background-color: #ff00dd;
-}
-
-#friday {
-  background-color: #ff0000;
-}
-
-#saturday {
-  background-color: #ff8000;
-}
-
-#sunday {
-  background-color: #ffdd00;
-}
-
- */
 </style>

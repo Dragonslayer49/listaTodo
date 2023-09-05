@@ -1,10 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    app: {
-      baseURL: "/",
-    },
+  app: {
+    baseURL: "/",
+  },
   devtools: { enabled: false },
-  css: ['~/assets/css/app.scss',
-  "bootstrap-icons/font/bootstrap-icons.scss"]
-
-})
+  css: ["~/assets/css/app.scss", "bootstrap-icons/font/bootstrap-icons.scss"],
+  modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
+});

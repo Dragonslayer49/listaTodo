@@ -7,6 +7,7 @@ import { indexOf } from "vuedraggable/dist/vuedraggable.common";
 const props = defineProps({
   title: String,
   items: { type: Array, required: true },
+  index: Number,
 });
 const emit = defineEmits(["donee"]);
 const edycja = ref(false);
@@ -44,68 +45,145 @@ function DoDone(zrobione, arr, index) {
   emit("donee", zrobione);
   arr.splice(index, 1);
 }
+console.log(props.index);
 </script>
 
 <template>
-  <div class="col-1 dzientyg">
-    <h3 class="align-self-center dzien">{{ title }}</h3>
-    <div id="lista" class="d-flex flex-column">
-      <ul class="ulul">
-        <draggable :list="items" item-key="key">
-          <template #item="{ element, index }">
-            <Lista
-              :napis="element.text"
-              :ind="element.id"
-              @usun="items.splice(index, 1)"
-              @edytuj="(zmien) => edytujItemy(index, zmien, items)"
-              @doneitems="(zrobione) => DoDone(zrobione, items, index)"
-            />
-          </template> </draggable
-        ><!--LISTA-->
+  <div class="d flex flex-column col-4" style="background-color: #caba9c">
+    <div
+      v-if="index < 5"
+      class="dzientyg d-flex flex-column"
+      style="background-color: #8a6240"
+    >
+      <h3 class="align-self-center dzien">{{ title }}</h3>
+      <div id="lista" class="d-flex flex-column">
+        <ul class="ulul">
+          <draggable :list="items" item-key="key">
+            <template #item="{ element, index }">
+              <Lista
+                :napis="element.text"
+                :ind="element.id"
+                @usun="items.splice(index, 1)"
+                @edytuj="(zmien) => edytujItemy(index, zmien, items)"
+                @doneitems="(zrobione) => DoDone(zrobione, items, index)"
+              />
+            </template> </draggable
+          ><!--LISTA-->
 
-        <div v-if="edycja == false" class="d-flex justify-content-center">
-          <button
-            type="button"
-            @click="edycja = true"
-            class="plusIcon btn btn-sm btn-success w-100"
-          >
-            <i class="bi bi-plus-lg"></i>
-          </button>
-        </div>
-        <div v-else class="">
-          <div class="w-100 d-flex justify-content-center">
-            <form @submit.prevent="dodaj">
-              <input v-model="tekst" type="text" />
-            </form>
-          </div>
-          <div class="d-flex justify-content-center">
-            <button
-              v-if="tekst == null"
-              type="button"
-              @click="dodaj(items, index)"
-              class="btn btn-sm btn-primary"
-              disabled
-            >
-              <i class="bi bi-plus"></i>
-            </button>
-            <button
-              v-else
-              type="button"
-              @click="dodaj(items)"
-              class="btn btn-sm btn-primary"
-            >
-              <i class="bi bi-plus"></i>
-            </button>
+          <div v-if="edycja == false" class="d-flex justify-content-center">
             <button
               type="button"
-              @click="edycja = false"
-              class="btn btn-sm btn-danger"
+              @click="edycja = true"
+              class="plusIcon btn btn-sm btn-success w-100"
             >
-              <i class="bi bi-x"></i>
+              <i class="bi bi-plus-lg"></i>
             </button>
           </div>
-        </div>
-      </ul>
+          <div v-else class="">
+            <div class="w-100 d-flex justify-content-center">
+              <form @submit.prevent="dodaj">
+                <input v-model="tekst" type="text" />
+              </form>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button
+                v-if="tekst == null"
+                type="button"
+                @click="dodaj(items, index)"
+                class="btn btn-sm btn-primary"
+                disabled
+              >
+                <i class="bi bi-plus"></i>
+              </button>
+              <button
+                v-else
+                type="button"
+                @click="dodaj(items)"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="bi bi-plus"></i>
+              </button>
+              <button
+                type="button"
+                @click="edycja = false"
+                class="btn btn-sm btn-danger"
+              >
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+
+    <!--                                                                    sobota i niedziela-->
+
+    <div
+      v-else-if="index == 5"
+      class="d-flex"
+      style="background-color: #5e3023"
+    >
+      <h3 class="align-self-center dzien">{{ title }}</h3>
+      <div id="lista" class="d-flex">
+        <ul class="ulul">
+          <draggable :list="items" item-key="key">
+            <template #item="{ element, index }">
+              <Lista
+                :napis="element.text"
+                :ind="element.id"
+                @usun="items.splice(index, 1)"
+                @edytuj="(zmien) => edytujItemy(index, zmien, items)"
+                @doneitems="(zrobione) => DoDone(zrobione, items, index)"
+              />
+            </template> </draggable
+          ><!--LISTA-->
+
+          <div v-if="edycja == false" class="d-flex justify-content-center">
+            <button
+              type="button"
+              @click="edycja = true"
+              class="plusIcon btn btn-sm btn-success w-100"
+            >
+              <i class="bi bi-plus-lg"></i>
+            </button>
+          </div>
+          <div v-else class="">
+            <div class="w-100 d-flex justify-content-center">
+              <form @submit.prevent="dodaj">
+                <input v-model="tekst" type="text" />
+              </form>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button
+                v-if="tekst == null"
+                type="button"
+                @click="dodaj(items, index)"
+                class="btn btn-sm btn-primary"
+                disabled
+              >
+                <i class="bi bi-plus"></i>
+              </button>
+              <button
+                v-else
+                type="button"
+                @click="dodaj(items)"
+                class="btn btn-sm btn-primary"
+              >
+                <i class="bi bi-plus"></i>
+              </button>
+              <button
+                type="button"
+                @click="edycja = false"
+                class="btn btn-sm btn-danger"
+              >
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -131,8 +209,8 @@ li {
 }
 
 .dzientyg {
-  flex-basis: 14.2%;
-  min-height: 40rem;
+  flex-basis: 30%;
+  min-height: 20rem;
 }
 
 .dzien {
