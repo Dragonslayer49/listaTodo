@@ -24,7 +24,7 @@ function doDone() {
 </script>
 
 <template>
-  <div v-if="editMode == true">
+  <div v-if="editMode === true">
     <form @submit.prevent="zmien">
       <input v-model="zmienic" type="text" />
     </form>
@@ -60,60 +60,66 @@ function doDone() {
     </div>
   </div>
   <div v-else>
-    <li class="text-start">
-      <div class="list-group-item p-2">
+    <div class="list-group-item p-2 d-flex flex-row">
+      <li class="text-start">
         {{ napis }}
-        {{ ind }}
+      </li>
+      <button
+        id="przyciskD"
+        type="button"
+        @click="emit('usun')"
+        class="btn btn-sm btn-danger"
+      >
+        <i class="bi bi-x"> </i>
+      </button>
+      <div v-if="przyciski == false" class="align-self-end">
         <button
-          id="przyciskD"
           type="button"
-          @click="emit('usun')"
-          class="btn btn-sm btn-danger"
+          @click="przyciski = !przyciski"
+          class="btn btn-sm btn-primary"
         >
-          <i class="bi bi-x"> </i>
+          <i class="bi bi-gear-fill"> </i>
         </button>
-        <div v-if="przyciski == false" class="d-flex justify-content-end">
-          <button
-            type="button"
-            @click="przyciski = !przyciski"
-            class="btn btn-sm btn-primary"
-          >
-            <i class="bi bi-gear-fill"> </i>
-          </button>
-        </div>
-
-        <div v-else class="d-flex justify-content-end">
-          <button
-            type="button"
-            @click="editMode = true"
-            class="btn btn-sm btn-dark"
-          >
-            <i class="bi bi-pencil-square"> </i>
-          </button>
-
-          <button type="button" @click="doDone" class="btn btn-sm btn-success">
-            <i class="bi bi-check"> </i>
-          </button>
-
-          <button
-            type="button"
-            @click="przyciski = !przyciski"
-            class="btn btn-sm btn-primary"
-          >
-            <i class="bi bi-gear-fill"> </i>
-          </button>
-        </div>
       </div>
-    </li>
+
+      <div v-else class="d-flex justify-content-end">
+        <button
+          type="button"
+          @click="editMode = true"
+          class="btn btn-sm btn-dark"
+        >
+          <i class="bi bi-pencil-square"> </i>
+        </button>
+
+        <button type="button" @click="doDone" class="btn btn-sm btn-success">
+          <i class="bi bi-check"> </i>
+        </button>
+
+        <button
+          type="button"
+          @click="przyciski = !przyciski"
+          class="btn btn-sm btn-primary"
+        >
+          <i class="bi bi-gear-fill"> </i>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 li {
-  width: 100%;
+  min-width: 0;
+  max-width: 300px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   color: #001524;
 }
-
+input[type="text"]:focus {
+  border: 3px solid #555;
+}
 li:hover {
   opacity: 0.95;
   background-color: #8a6240;

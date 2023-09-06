@@ -15,7 +15,11 @@ let idd = 0;
 const WEEK = ref([
   {
     name: "MONDAY",
-    items: [],
+    items: [
+      { text: "zrob notatki" },
+      { text: "zrob lepsze ikony" },
+      { text: "popraw overflow w li" },
+    ],
   },
   {
     name: "TUESDAY",
@@ -62,51 +66,69 @@ function dodajDone(zrobione) {
   <Modalisko ref="modalElement" />
   <!--modalisko sie jeszcze nie pokazue-->
   <main>
-    <div class="d-flex w-100 position-relative">
-      <div id="welcome" class="">
+    <div class="d-flex w-100 position-relative p-3">
+      <div id="welcome" class="p-3">
         <h1 id="welcomeText">MAM PLAN</h1>
-      </div>
-      <div class="align-self-end">
-        <button type="button" class="btn btn-outline-info" @Click="">
-          <b>Zapisz<br />notatki</b>
-        </button>
       </div>
     </div>
 
     <div class="row">
-      <div id="NaSrodek" class="d-flex col-10 h-100 p-5">
-        <div id="blok" class="d-flex flex-column text-light">
-          <div class="row p-5 justify-content-around">
-            <Dzien
-              v-for="(day, index) in WEEK"
-              :title="day.name"
-              :key="index"
-              :items="day.items"
-              :index="index"
-              @donee="(zrobione) => dodajDone(zrobione)"
-            />
+      <div id="NaSrodek" class="d-flex col-9 h-100 p-5">
+        <div id="blok" class="d-flex flex-column text-light w-100">
+          <div class="row p-4 justify-content-around">
+            <template v-for="(day, index) in WEEK" class="">
+              <div id="lista" v-if="index < 5" class="col-4 day">
+                <Dzien
+                  :title="day.name"
+                  :key="index"
+                  :items="day.items"
+                  :index="index"
+                  @donee="(zrobione) => dodajDone(zrobione)"
+                />
+              </div>
+              <div v-else-if="index === 5" class="col-4 weekend">
+                <div class="h-50">
+                  <Dzien
+                    :title="WEEK[5].name"
+                    :items="WEEK[5].items"
+                    @donee="(zrobione) => dodajDone(zrobione)"
+                  />
+                </div>
+                <div>
+                  <Dzien
+                    :title="WEEK[6].name"
+                    :items="WEEK[6].items"
+                    @donee="(zrobione) => dodajDone(zrobione)"
+                  />
+                </div>
+              </div>
+            </template>
           </div>
         </div>
       </div>
+      <div class="d-flex flex-column col-3 p-5">
+        <div id="done" class="d-flex flex-column">
+          <div id="blokDone" class="d-flex flex-column text-light">
+            <h2 class="align-self-center p-1">Done</h2>
+            <div id="Przesuwanie" class="d-flex flex-column">
+              <ul>
+                <draggable :list="done.Doneitems" item-key="id">
+                  <template #item="{ element }">
+                    <DoneList
+                      :key="element.idd"
+                      :napis="element.text"
+                      :items="done.Doneitems"
+                    />
+                  </template>
+                </draggable>
+              </ul>
+            </div>
+          </div>
 
-      <div
-        id="done"
-        class="d-flex justify-content-around align-items-center col-1 h-100"
-      >
-        <div id="blokDone" class="d-flex flex-column text-light">
-          <h2 class="align-self-center">Done</h2>
-          <div id="lista" class="d-flex flex-column">
-            <ul>
-              <draggable :list="done.Doneitems" item-key="id">
-                <template #item="{ element }">
-                  <DoneList
-                    :key="element.idd"
-                    :napis="element.text"
-                    :items="done.Doneitems"
-                  />
-                </template>
-              </draggable>
-            </ul>
+          <div id="notatnik" class="d-flex flex-column text-light">
+            <h2 class="align-self-center p-1">Notatki</h2>
+            <form><textarea></textarea></form>
+            <div id="" class="d-flex flex-column"></div>
           </div>
         </div>
       </div>
@@ -117,42 +139,39 @@ function dodajDone(zrobione) {
 <style scoped>
 main {
   min-height: 100vh;
-  font-family: sans-serif;
-  background-color: #caba9c;
+  font-family: "Comic Sans MS";
+  background-color: #fefae0;
+  overflow-x: hidden;
 }
 
 #welcomeText {
-  color: #5e3023;
+  font-weight: 900;
+  color: #283618;
 }
 
 #welcome {
   left: 50%;
   top: 50%;
   position: absolute;
-  transform: translate(-50%, -30%);
+  transform: translate(-50%, -10%);
 }
 
 #blok {
-  background-color: #445d48;
   min-height: 80%;
   height: auto;
-  min-width: 90%;
-  width: auto;
 
-  box-shadow:
-    0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: calc(80%);
 }
 
 #blokDone {
-  background-color: #b7edc7;
   min-width: 20rem;
-  min-height: 30rem;
-  height: auto;
-
-  box-shadow:
-    0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  min-height: 5rem;
+  max-height: 25rem;
+  background-color: #dda15e;
+}
+#Przesuwanie {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #NaSrodek {
@@ -165,5 +184,37 @@ main {
 
 #lista {
   column-count: auto;
+  background-color: #fefae0;
+}
+#notatnik {
+  min-height: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #606c38;
+  margin-top: 4rem;
+}
+textarea {
+  background-color: #606c38;
+  border-style: none;
+  width: 100%;
+}
+.day {
+  min-height: 25rem;
+  max-height: 25rem;
+  outline-style: solid;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: #606c38;
+  background-color: #fefae0;
+  color: #283618;
+}
+.weekend {
+  min-height: 12.5rem;
+  outline-style: solid;
+  border-radius: 2px;
+  border-width: 2px;
+  border-color: #606c38;
+  background-color: #fefae0;
+  color: #283618;
 }
 </style>
