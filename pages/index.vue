@@ -3,50 +3,14 @@ import { ref } from "vue";
 import draggable from "vuedraggable";
 
 import { useListStore } from "@/store/dni.js";
+import { useWEEKStore } from "@/store/tydzien.js";
+const tyd = useWEEKStore();
 const done = useListStore(); //pinia
 const { $bootstrap } = useNuxtApp();
 const modalElement = ref();
 const modalisko = ref();
 const nuxtApp = useNuxtApp();
 let id = 0;
-let idd = 0;
-// const items = ref([{id: id++, text: 'One'}, {id: id++, text: 'Two'}, {id: id++, text: "Three"}])
-
-const WEEK = ref([
-  {
-    name: "MONDAY",
-    items: [
-      { text: "zrob notatki" },
-      { text: "zrob lepsze ikony" },
-      { text: "popraw overflow w li" },
-    ],
-  },
-  {
-    name: "TUESDAY",
-    items: [],
-  },
-  {
-    name: "WEDNSDAY",
-    items: [],
-  },
-  {
-    name: "THURDAY",
-    items: [],
-  },
-  {
-    name: "FRIDAY",
-    items: [],
-  },
-  {
-    name: "SATURDAY",
-    items: [],
-  },
-  {
-    name: "SUNDAY",
-    items: [],
-  },
-]);
-
 function popup() {
   console.log("dzien dobry");
   modalisko.value = new nuxtApp.$bootstrap.Modal(modalElement.value, {});
@@ -76,28 +40,27 @@ function dodajDone(zrobione) {
       <div id="NaSrodek" class="d-flex col-9 h-100 p-5">
         <div id="blok" class="d-flex flex-column text-light w-100">
           <div class="row p-4 justify-content-around">
-            <template v-for="(day, index) in WEEK" class="">
+            <template v-for="(day, index) in tyd.WEEK" class="">
               <div id="lista" v-if="index < 5" class="col-4 day">
                 <Dzien
                   :title="day.name"
                   :key="index"
                   :items="day.items"
-                  :index="index"
                   @donee="(zrobione) => dodajDone(zrobione)"
                 />
               </div>
               <div v-else-if="index === 5" class="col-4 weekend">
                 <div class="h-50">
                   <Dzien
-                    :title="WEEK[5].name"
-                    :items="WEEK[5].items"
+                    :title="tyd.WEEK[5].name"
+                    :items="tyd.WEEK[5].items"
                     @donee="(zrobione) => dodajDone(zrobione)"
                   />
                 </div>
                 <div>
                   <Dzien
-                    :title="WEEK[6].name"
-                    :items="WEEK[6].items"
+                    :title="tyd.WEEK[6].name"
+                    :items="tyd.WEEK[6].items"
                     @donee="(zrobione) => dodajDone(zrobione)"
                   />
                 </div>
@@ -127,7 +90,7 @@ function dodajDone(zrobione) {
 
           <div id="notatnik" class="d-flex flex-column text-light">
             <h2 class="align-self-center p-1">Notatki</h2>
-            <form><textarea></textarea></form>
+            <form class="h-100"><textarea></textarea></form>
             <div id="" class="d-flex flex-column"></div>
           </div>
         </div>
@@ -183,11 +146,13 @@ main {
 }
 
 #lista {
+  overflow-y: auto;
   column-count: auto;
   background-color: #fefae0;
 }
 #notatnik {
-  min-height: 20rem;
+  min-height: 10rem;
+  height: auto;
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #606c38;
@@ -196,7 +161,11 @@ main {
 textarea {
   background-color: #606c38;
   border-style: none;
+  padding: 3px;
   width: 100%;
+  color: white;
+  min-height: 15rem;
+  overflow-y: auto;
 }
 .day {
   min-height: 25rem;

@@ -5,48 +5,26 @@ const props = defineProps({
   title: String,
   items: { type: Array, required: true },
 });
-
+import { useWEEKStore } from "@/store/tydzien.js";
+const tyd = useWEEKStore();
 const emit = defineEmits(["donee"]);
 
 const edycja = ref(false);
 const tekst = ref();
-let idd = 0;
-
-function dodaj(arr, index) {
-  const czyjest = arr.filter((i) => i.text === tekst.value);
-  if (czyjest.length) {
-    popup();
-  }
-  // if (items.value.indexOf((i) => i.text === tekst.value) >= 0) {
-  //   popup()
-  //
-  // }
-  else {
-    if (tekst.value != null) {
-      arr.push({ id: idd++, text: tekst.value });
-      tekst.value = null;
-    } else {
-      console.log("nie");
-    }
-  }
-  let i = 0;
-  for (i; i < arr.length; i++) {
-    console.log(arr[i].text);
-  }
-  edycja.value = false;
-} //DODAJE NOWY TEKST DO ARRAYA
-
-function edytujItemy(index, zmien, arr) {
-  arr[index].text = zmien;
-} //edytuje tekst
 
 function DoDone(zrobione, arr, index) {
   console.log(zrobione.value);
   emit("donee", zrobione);
   arr.splice(index, 1);
 }
-
-console.log(props.index);
+function dodaj(tekst) {
+  tyd.dodaj(tekst, props.items);
+  tekst = null;
+  edycja.value = false;
+}
+function edytujItemy(index, zmien, arr) {
+  arr[index].text = zmien;
+} //edytuje tekst
 </script>
 
 <template>
@@ -58,6 +36,7 @@ console.log(props.index);
           <Lista
             :napis="element.text"
             :ind="element.id"
+            :element="element"
             @usun="items.splice(index, 1)"
             @edytuj="(zmien) => edytujItemy(index, zmien, items)"
             @doneitems="(zrobione) => DoDone(zrobione, items, index)"
@@ -76,7 +55,7 @@ console.log(props.index);
       </div>
       <div v-else class="">
         <div class="w-100 d-flex justify-content-center">
-          <form @submit.prevent="dodaj">
+          <form @submit.prevent="tyd.dodaj(tekst)">
             <input v-model="tekst" type="text" />
           </form>
         </div>
@@ -85,7 +64,7 @@ console.log(props.index);
           <button
             v-if="tekst == null"
             type="button"
-            @click="dodaj(items, index)"
+            @click="tyd.dodaj(items)"
             class="btn btn-sm btn-primary"
             disabled
           >
@@ -94,7 +73,7 @@ console.log(props.index);
           <button
             v-else
             type="button"
-            @click="dodaj(items)"
+            @click="dodaj(tekst)"
             class="btn btn-sm btn-primary"
           >
             <i class="bi bi-plus"></i>

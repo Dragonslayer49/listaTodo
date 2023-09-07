@@ -1,12 +1,15 @@
 <script setup lang="js">
 import { ref } from "vue";
 
-const props = defineProps(["napis", "ind"]);
+const props = defineProps(["napis", "ind", "element"]);
 const zmienic = ref();
 const przyciski = ref(false);
 const zmien = ref();
 const dalej = ref(props.napis);
 const emit = defineEmits(["usun", "edytuj", "doneitems"]);
+
+import { useWEEKStore } from "~/store/tydzien";
+const tyd = useWEEKStore();
 
 const editMode = ref(false);
 
@@ -61,9 +64,10 @@ function doDone() {
   </div>
   <div v-else>
     <div class="list-group-item p-2 d-flex flex-row">
-      <li class="text-start">
+      <li class="">
         {{ napis }}
       </li>
+
       <button
         id="przyciskD"
         type="button"
@@ -72,7 +76,7 @@ function doDone() {
       >
         <i class="bi bi-x"> </i>
       </button>
-      <div v-if="przyciski == false" class="align-self-end">
+      <div v-if="przyciski == false" class="d-flex justify-content-end">
         <button
           type="button"
           @click="przyciski = !przyciski"
@@ -109,8 +113,8 @@ function doDone() {
 
 <style scoped>
 li {
-  min-width: 0;
-  max-width: 300px;
+  min-width: 250px;
+  max-width: 290px;
   display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;

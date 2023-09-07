@@ -16,11 +16,6 @@ export const useListStore = defineStore("lista", {
     dodaj(napis) {
       this.Doneitems.push({ idd: idd++, text: napis.value });
     },
-    zapisz(zapis) {
-      if (zapis == true) {
-        persist: true;
-      }
-    },
   },
   persist: true,
 });
