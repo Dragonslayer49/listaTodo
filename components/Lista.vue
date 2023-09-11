@@ -25,33 +25,53 @@ function doDone() {
   emit("doneitems", dalej);
 }
 </script>
-
 <template>
-  <div v-if="editMode === true">
+  <div v-if="editMode === true" class="list-group-item p-2 d-flex flex-row">
     <form @submit.prevent="zmien">
       <input v-model="zmienic" type="text" />
     </form>
+
     <div v-if="zmienic != null">
-      <button type="button" @click="Edycja()" class="btn btn-outline-info">
-        Save
-      </button>
-      <button type="button" @click="editMode = !editMode" class="btn delete">
-        Cancel
-      </button>
+      <div class="d-flex flex-row justify-content-end">
+        <button
+          type="button"
+          @click="editMode = !editMode"
+          class="btn btn-sm cog"
+        >
+          <i class="bi bi-arrow-left-square"></i>
+        </button>
+
+        <button type="button" @click="Edycja()" class="btn btn-sm write">
+          <i class="bi bi-pencil-square"> </i>
+        </button>
+      </div>
     </div>
 
     <div v-else>
-      <button type="button" @click="Edycja()" class="btn done" disabled>
-        Save
-      </button>
-      <button type="button" @click="editMode = !editMode" class="btn delete">
-        Cancel
-      </button>
+      <div class="d-flex flex-row justify-content-end">
+        <button
+          type="button"
+          @click="editMode = !editMode"
+          class="btn btn-sm cog"
+        >
+          <i class="bi bi-arrow-left-square"></i>
+        </button>
+        <button
+          type="button"
+          @click="Edycja()"
+          class="btn btn-sm write"
+          disabled
+        >
+          <i class="bi bi-pencil-square"> </i>
+        </button>
+      </div>
     </div>
   </div>
   <div v-else>
     <div id="task" class="list-group-item p-2 d-flex flex-row">
-      <li class="">
+      <li
+        class="shadow-md rounded-b-md border-t-2 border-sky-500 hover:bg-slate-900"
+      >
         {{ napis }}
       </li>
 
@@ -59,7 +79,7 @@ function doDone() {
         id="przyciskD"
         type="button"
         @click="emit('usun')"
-        class="btn btn-sm delete align-self-end przyciski"
+        class="btn btn-sm delete align-self-end"
       >
         <i class="bi bi-calendar-x-fill"> </i>
       </button>
@@ -72,11 +92,15 @@ function doDone() {
           @click="przyciski = !przyciski"
           class="btn btn-sm cog align-self-end"
         >
-          <i class="bi bi-gear-fill"> </i>
+          <div
+            class="md:hover:animate-spin transition duration-150 ease-in-out"
+          >
+            <i class="bi bi-gear-fill"> </i>
+          </div>
         </button>
       </div>
 
-      <div v-else class="d-flex justify-content-end">
+      <div v-else class="d-flex justify-content-end przyciski">
         <button type="button" @click="editMode = true" class="btn btn-sm write">
           <i class="bi bi-pencil-square"> </i>
         </button>
@@ -84,14 +108,15 @@ function doDone() {
         <button type="button" @click="doDone" class="btn btn-sm done">
           <i class="bi bi-clipboard-check-fill"> </i>
         </button>
-
-        <button
-          type="button"
-          @click="przyciski = !przyciski"
-          class="btn btn-sm cog"
-        >
-          <i class="bi bi-gear-fill"> </i>
-        </button>
+        <div class="md:hover:animate-spin">
+          <button
+            type="button"
+            @click="przyciski = !przyciski"
+            class="btn btn-sm cog"
+          >
+            <i class="bi bi-gear-fill"> </i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -106,22 +131,18 @@ li {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  border-bottom-width: 0.5px;
-
   padding: 1px;
-  border-bottom-color: #b9b7ac;
-  border-bottom-style: solid;
-  background-color: #f8f6e5;
+  color: black;
 }
-#przyciski {
-  width: 30%;
+.przyciski {
+  border: 2px solid #000000;
+  border-radius: 4px;
 }
 input[type="text"]:focus {
   border: 3px solid #555;
 }
 li:hover {
   opacity: 0.95;
-  background-color: #000000;
   color: #ffffff;
 }
 #task {
@@ -139,32 +160,25 @@ li:hover {
 }
 
 .cog {
-  border: 2px solid #000000;
   color: #000000;
 }
 .cog:hover {
-  border: 2px solid black;
   color: black;
   opacity: 0.6;
 }
 .done {
-  border: 2px solid #000000;
   color: #000000;
 }
 .done:hover {
-  border: 2px solid #47ce77;
   color: #47ce77;
 }
 .write {
-  border: 2px solid #000000;
   color: #000000;
 }
 .write:hover {
-  border: 2px solid #56cad3;
-  color: #56cad3;
+  color: skyblue;
 }
 .delete {
-  border: 2px solid #000000;
   color: #000000;
 }
 .delete:hover {
