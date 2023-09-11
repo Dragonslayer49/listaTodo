@@ -30,7 +30,13 @@ function edytujItemy(index, zmien, arr) {
 <template>
   <div id="lista" class="d-flex flex-column">
     <ul class="ulul">
-      <draggable :list="items" item-key="key">
+      <draggable
+        :list="items"
+        item-key="key"
+        :animation="200"
+        ghost-class="moving-card"
+        filter=".action-button"
+      >
         <template #item="{ element, index }">
           <Lista
             :napis="element.text"
@@ -55,8 +61,13 @@ function edytujItemy(index, zmien, arr) {
       </div>
       <div v-else class="">
         <div class="w-100 d-flex justify-content-center">
-          <form @submit.prevent="dodaj(tekst)">
-            <input v-model="tekst" type="text" />
+          <form @submit.prevent="dodaj(tekst)" class="">
+            <input
+              v-model="tekst"
+              type="text"
+              name="email"
+              placeholder="you@example.com"
+            />
           </form>
         </div>
 
@@ -121,12 +132,8 @@ ul {
   opacity: 0.5;
 }
 
-.dzien {
-  text-align: center;
-}
 h3 span {
   color: #000000;
-  border-bottom: 5px double #000000;
   outline-offset: -20px;
 }
 </style>

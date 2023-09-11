@@ -31,7 +31,7 @@ function dodajDone(zrobione) {
   <!--modalisko sie jeszcze nie pokazue-->
   <main>
     <div class="d-flex w-100 position-relative p-3">
-      <div id="welcome" class="p-3">
+      <div id="welcome" class="p-3 text-5xl">
         <h1 id="welcomeText">MAM PLAN</h1>
       </div>
     </div>
@@ -48,7 +48,9 @@ function dodajDone(zrobione) {
                 >
                   <tytul :title="day.name" />
                 </div>
-                <div class="Przesuwanie">
+                <div
+                  class="Przesuwanie scroll-smooth hover:scroll-auto touch-auto"
+                >
                   <Dzien
                     :title="day.name"
                     :key="index"
@@ -61,7 +63,7 @@ function dodajDone(zrobione) {
                 <div class="w-100 d-flex justify-content-center">
                   <tytul :title="tyd.WEEK[5].name" />
                 </div>
-                <div class="week">
+                <div class="week scroll-smooth hover:scroll-auto touch-auto">
                   <Dzien
                     :title="tyd.WEEK[5].name"
                     :items="tyd.WEEK[5].items"
@@ -71,7 +73,7 @@ function dodajDone(zrobione) {
                 <div id="tytul" class="w-100 d-flex justify-content-center">
                   <tytul :title="tyd.WEEK[6].name" />
                 </div>
-                <div class="week">
+                <div class="week scroll-smooth hover:scroll-auto touch-auto">
                   <Dzien
                     :title="tyd.WEEK[6].name"
                     :items="tyd.WEEK[6].items"
@@ -84,27 +86,36 @@ function dodajDone(zrobione) {
         </div>
       </div>
       <div class="d-flex flex-column col-3 p-5">
-        <div id="done" class="d-flex flex-column">
+        <div id="done" class="d-flex flex-column p-4">
           <div id="blokDone" class="d-flex flex-column text-light">
             <h2 class="align-self-center p-1">Done</h2>
-            <div id="Przesuwanie" class="d-flex flex-column">
-              <ul>
-                <draggable :list="done.Doneitems" item-key="id">
-                  <template #item="{ element }">
-                    <DoneList
-                      :key="element.idd"
-                      :napis="element.text"
-                      :items="done.Doneitems"
-                    />
-                  </template>
-                </draggable>
-              </ul>
+            <div class="d-flex flex-column Przesuwanie">
+              <draggable
+                tag="ul"
+                :list="done.Doneitems"
+                item-key="id"
+                :animation="200"
+                ghost-class="moving-card"
+                filter=".action-button"
+              >
+                <template #item="{ element }">
+                  <DoneList
+                    :key="element.idd"
+                    :napis="element.text"
+                    :items="done.Doneitems"
+                  />
+                </template>
+              </draggable>
             </div>
           </div>
 
           <div id="notatnik" class="d-flex flex-column text-light">
-            <h2 class="align-self-center p-1">Notatki</h2>
-            <form class="h-100"><textarea></textarea></form>
+            <h2 class="align-self-center p-1 text-sky-500">Notatki</h2>
+            <form class="h-100 outline outline-offset-2 outline-cyan-500">
+              <textarea
+                class="caret-sky-500 text-sky-500 rounded-b-md focus:outline-none focus:ring focus-ring-b focus:ring-sky-500 bg-sky-950 focus:bg-slate-900 focus:shadow-inner-indigo-500/40"
+              ></textarea>
+            </form>
             <div id="" class="d-flex flex-column"></div>
           </div>
         </div>
@@ -116,10 +127,9 @@ function dodajDone(zrobione) {
 <style scoped>
 main {
   min-height: 100vh;
-  font-family: "ＭＳ Ｐゴシック";
   background-color: #000000;
   overflow-x: hidden;
-  color: #ffffff;
+  color: #000000;
 }
 
 #welcomeText {
@@ -135,44 +145,44 @@ main {
 }
 
 #blokDone {
-  min-width: 20rem;
+  min-width: 5rem;
   min-height: 5rem;
   max-height: 25rem;
   background-color: #ffffff;
+  color: #c04646;
 }
 .Przesuwanie {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 90%;
 }
-
+h1,
+h2,
+h3 {
+  color: black;
+}
 #NaSrodek {
   min-height: calc(100vh - 89px);
 }
 
 #done {
   min-height: calc(100vh - 89px);
+  color: black;
 }
 
 #notatnik {
-  color: black;
   min-height: 10rem;
   height: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #ffffff;
   margin-top: 4rem;
-  border-bottom: 5px solid #ffa0a0;
 }
 #tytul {
   height: 10%;
 }
 textarea {
-  background-color: #ffffff;
-  border-style: none;
   padding: 3px;
   width: 100%;
-  color: #000000;
   min-height: 15rem;
   overflow-y: auto;
 }
