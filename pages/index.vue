@@ -129,7 +129,7 @@ main {
   min-height: 100vh;
   background-color: #000000;
   overflow-x: hidden;
-  color: #000000;
+  color: #ffffff;
 }
 
 #welcomeText {
@@ -145,22 +145,17 @@ main {
 }
 
 #blokDone {
-  min-width: 5rem;
+  min-width: 20rem;
   min-height: 5rem;
   max-height: 25rem;
   background-color: #ffffff;
-  color: #c04646;
 }
 .Przesuwanie {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 90%;
 }
-h1,
-h2,
-h3 {
-  color: black;
-}
+
 #NaSrodek {
   min-height: calc(100vh - 89px);
 }
