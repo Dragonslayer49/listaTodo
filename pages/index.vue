@@ -38,26 +38,35 @@ function dodajDone(zrobione) {
 
     <div class="row">
       <div id="NaSrodek" class="d-flex col-9 h-100 p-5">
-        <div id="blok" class="d-flex flex-column text-light w-100">
+        <div class="d-flex flex-column text-light w-100">
           <div class="row p-4 justify-content-around">
             <template v-for="(day, index) in tyd.WEEK" class="">
-              <div id="lista" v-if="index < 5" class="col-4 day">
-                <Dzien
-                  :title="day.name"
-                  :key="index"
-                  :items="day.items"
-                  @donee="(zrobione) => dodajDone(zrobione)"
-                />
+              <div v-if="index < 5" class="col-4 day">
+                <tytul :title="day.name" />
+                <div class="przesuanie">
+                  <Dzien
+                    :title="day.name"
+                    :key="index"
+                    :items="day.items"
+                    @donee="(zrobione) => dodajDone(zrobione)"
+                  />
+                </div>
               </div>
               <div v-else-if="index === 5" class="col-4 weekend">
-                <div class="h-50">
+                <div class="w-100 d-flex justify-content-center">
+                  <tytul :title="tyd.WEEK[5].name" />
+                </div>
+                <div class="week">
                   <Dzien
                     :title="tyd.WEEK[5].name"
                     :items="tyd.WEEK[5].items"
                     @donee="(zrobione) => dodajDone(zrobione)"
                   />
                 </div>
-                <div>
+                <div class="w-100 d-flex justify-content-center">
+                  <tytul :title="tyd.WEEK[6].name" />
+                </div>
+                <div class="week">
                   <Dzien
                     :title="tyd.WEEK[6].name"
                     :items="tyd.WEEK[6].items"
@@ -102,14 +111,15 @@ function dodajDone(zrobione) {
 <style scoped>
 main {
   min-height: 100vh;
-  font-family: "Comic Sans MS";
-  background-color: #fefae0;
+  font-family: "ＭＳ Ｐゴシック";
+  background-color: #000000;
   overflow-x: hidden;
+  color: #ffffff;
 }
 
 #welcomeText {
   font-weight: 900;
-  color: #283618;
+  color: #ffffff;
 }
 
 #welcome {
@@ -119,18 +129,11 @@ main {
   transform: translate(-50%, -10%);
 }
 
-#blok {
-  min-height: 80%;
-  height: auto;
-
-  width: calc(80%);
-}
-
 #blokDone {
   min-width: 20rem;
   min-height: 5rem;
   max-height: 25rem;
-  background-color: #dda15e;
+  background-color: #ffffff;
 }
 #Przesuwanie {
   overflow-y: auto;
@@ -145,25 +148,22 @@ main {
   min-height: calc(100vh - 89px);
 }
 
-#lista {
-  overflow-y: auto;
-  column-count: auto;
-  background-color: #fefae0;
-}
 #notatnik {
+  color: black;
   min-height: 10rem;
   height: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #606c38;
+  background-color: #ffffff;
   margin-top: 4rem;
+  border-bottom: 5px solid #ffa0a0;
 }
 textarea {
-  background-color: #606c38;
+  background-color: #ffffff;
   border-style: none;
   padding: 3px;
   width: 100%;
-  color: white;
+  color: #000000;
   min-height: 15rem;
   overflow-y: auto;
 }
@@ -173,17 +173,20 @@ textarea {
   outline-style: solid;
   border-width: 2px;
   border-radius: 2px;
-  border-color: #606c38;
-  background-color: #fefae0;
-  color: #283618;
+  border-color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
 }
 .weekend {
-  min-height: 12.5rem;
+  max-height: 25rem;
   outline-style: solid;
   border-radius: 2px;
   border-width: 2px;
-  border-color: #606c38;
-  background-color: #fefae0;
-  color: #283618;
+  border-color: #000000;
+  background-color: #ffffff;
+  color: #000000;
+}
+.week {
+  height: 50%;
 }
 </style>

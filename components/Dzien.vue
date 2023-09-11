@@ -28,7 +28,6 @@ function edytujItemy(index, zmien, arr) {
 </script>
 
 <template>
-  <h3 class="align-self-center dzien p-3">{{ title }}</h3>
   <div id="lista" class="d-flex flex-column">
     <ul class="ulul">
       <draggable :list="items" item-key="key">
@@ -48,14 +47,15 @@ function edytujItemy(index, zmien, arr) {
         <button
           type="button"
           @click="edycja = true"
-          class="plusIcon btn btn-sm btn-success w-100"
+          class="plusIcon btn btn-sm done w-100"
         >
           <i class="bi bi-plus-lg"></i>
         </button>
+        <!--        button edit mode plus-->
       </div>
       <div v-else class="">
         <div class="w-100 d-flex justify-content-center">
-          <form @submit.prevent="tyd.dodaj(tekst)">
+          <form @submit.prevent="dodaj(tekst)">
             <input v-model="tekst" type="text" />
           </form>
         </div>
@@ -64,12 +64,13 @@ function edytujItemy(index, zmien, arr) {
           <button
             v-if="tekst == null"
             type="button"
-            @click="tyd.dodaj(items)"
-            class="btn btn-sm btn-primary"
+            @click="dodaj(items)"
+            class="btn btn-sm cog"
             disabled
           >
             <i class="bi bi-plus"></i>
           </button>
+          <!--button add new text-->
           <button
             v-else
             type="button"
@@ -78,11 +79,8 @@ function edytujItemy(index, zmien, arr) {
           >
             <i class="bi bi-plus"></i>
           </button>
-          <button
-            type="button"
-            @click="edycja = false"
-            class="btn btn-sm btn-danger"
-          >
+          <!--          button exit editmode-->
+          <button type="button" @click="edycja = false" class="btn btn-sm cog">
             <i class="bi bi-x"></i>
           </button>
         </div>
@@ -92,13 +90,27 @@ function edytujItemy(index, zmien, arr) {
 </template>
 
 <style scoped>
+.cog {
+  border: 1px solid #dda15e;
+}
+.done {
+  border: 2px solid black;
+  color: white;
+  background-color: black;
+}
+.done:hover {
+  border: 2px solid #47ce77;
+  color: #dda15e;
+  background-color: #47ce77;
+}
+
 ul {
   list-style-type: none;
   text-align: start;
   padding: 1rem;
   width: 100%;
-}
-#lista {
+  height: 100%;
+  color: #000000;
 }
 
 .plusIcon {
@@ -106,10 +118,15 @@ ul {
 }
 
 .ulul:hover .plusIcon {
-  opacity: 1;
+  opacity: 0.5;
 }
 
 .dzien {
   text-align: center;
+}
+h3 span {
+  color: #000000;
+  border-bottom: 5px double #000000;
+  outline-offset: -20px;
 }
 </style>
