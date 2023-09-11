@@ -132,18 +132,9 @@ li {
   white-space: nowrap;
   overflow: hidden;
   padding: 1px;
-  color: black;
-}
-.przyciski {
-  border: 2px solid #000000;
-  border-radius: 4px;
 }
 input[type="text"]:focus {
   border: 3px solid #555;
-}
-li:hover {
-  opacity: 0.95;
-  color: #ffffff;
 }
 #task {
   padding: 1px;
@@ -157,32 +148,5 @@ li:hover {
 }
 #przyciskD:hover {
   opacity: 1;
-}
-
-.cog {
-  color: #000000;
-}
-.cog:hover {
-  color: black;
-  opacity: 0.6;
-}
-.done {
-  color: #000000;
-}
-.done:hover {
-  color: #47ce77;
-}
-.write {
-  color: #000000;
-}
-.write:hover {
-  color: skyblue;
-}
-.delete {
-  color: #000000;
-}
-.delete:hover {
-  border: 2px solid #c53f3f;
-  color: #c53f3f;
 }
 </style>

@@ -16,7 +16,6 @@ const emits = defineEmits(["item"]);
 li {
   padding: 1px;
   width: 100%;
-  color: black;
 }
 .list-group-item {
   cursor: grab;
