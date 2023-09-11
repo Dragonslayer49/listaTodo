@@ -5,7 +5,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <h3 class="align-self-center dzien">{{ title }}</h3>
+  <h3 class="p-1">
+    {{ title }}
+  </h3>
 </template>
 
 <style scoped></style>

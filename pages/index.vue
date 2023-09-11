@@ -42,8 +42,13 @@ function dodajDone(zrobione) {
           <div class="row p-4 justify-content-around">
             <template v-for="(day, index) in tyd.WEEK" class="">
               <div v-if="index < 5" class="col-4 day">
-                <tytul :title="day.name" />
-                <div class="przesuanie">
+                <div
+                  id="tytul"
+                  class="w-100 d-flex justify-content-center align-self-center p-1"
+                >
+                  <tytul :title="day.name" />
+                </div>
+                <div class="Przesuwanie">
                   <Dzien
                     :title="day.name"
                     :key="index"
@@ -63,7 +68,7 @@ function dodajDone(zrobione) {
                     @donee="(zrobione) => dodajDone(zrobione)"
                   />
                 </div>
-                <div class="w-100 d-flex justify-content-center">
+                <div id="tytul" class="w-100 d-flex justify-content-center">
                   <tytul :title="tyd.WEEK[6].name" />
                 </div>
                 <div class="week">
@@ -135,9 +140,10 @@ main {
   max-height: 25rem;
   background-color: #ffffff;
 }
-#Przesuwanie {
+.Przesuwanie {
   overflow-y: auto;
   overflow-x: hidden;
+  max-height: 90%;
 }
 
 #NaSrodek {
@@ -157,6 +163,9 @@ main {
   background-color: #ffffff;
   margin-top: 4rem;
   border-bottom: 5px solid #ffa0a0;
+}
+#tytul {
+  height: 10%;
 }
 textarea {
   background-color: #ffffff;
@@ -187,6 +196,8 @@ textarea {
   color: #000000;
 }
 .week {
-  height: 50%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 40%;
 }
 </style>
