@@ -29,9 +29,9 @@ function dodajDone(zrobione) {
 <template>
   <Modalisko ref="modalElement" />
   <!--modalisko sie jeszcze nie pokazue-->
-  <main>
+  <main class="bg-stone-900">
     <div class="d-flex w-100 position-relative p-3">
-      <div id="welcome" class="p-3 text-5xl">
+      <div id="welcome" class="p-3 text-5xl text-stone-100">
         <h1 id="welcomeText">MAM PLAN</h1>
       </div>
     </div>
@@ -41,10 +41,12 @@ function dodajDone(zrobione) {
         <div class="d-flex flex-column text-light w-100">
           <div class="row p-4 justify-content-around">
             <template v-for="(day, index) in tyd.WEEK" class="">
-              <div v-if="index < 5" class="col-4 day">
+              <div
+                v-if="index < 5"
+                class="col-4 day outline-emerald-700 outline outline-2"
+              >
                 <div
-                  id="tytul"
-                  class="w-100 d-flex justify-content-center align-self-center p-1"
+                  class="w-100 d-flex justify-content-center align-self-center p-1 text-stone-500 text-2xl mt-1"
                 >
                   <tytul :title="day.name" />
                 </div>
@@ -59,7 +61,10 @@ function dodajDone(zrobione) {
                   />
                 </div>
               </div>
-              <div v-else-if="index === 5" class="col-4 weekend">
+              <div
+                v-else-if="index === 5"
+                class="col-4 weekend outline-emerald-700 outline outline-2"
+              >
                 <div class="w-100 d-flex justify-content-center">
                   <tytul :title="tyd.WEEK[5].name" />
                 </div>
@@ -110,10 +115,12 @@ function dodajDone(zrobione) {
           </div>
 
           <div id="notatnik" class="d-flex flex-column text-light">
-            <h2 class="align-self-center p-1 text-sky-500">Notatki</h2>
+            <h2 class="align-self-center p-2 text-emerald-500 text-xl">
+              Notatki
+            </h2>
             <form class="h-100 outline outline-offset-2 outline-cyan-500">
               <textarea
-                class="caret-sky-500 text-sky-500 rounded-b-md focus:outline-none focus:ring focus-ring-b focus:ring-sky-500 bg-sky-950 focus:bg-slate-900 focus:shadow-inner-indigo-500/40"
+                class="caret-emerald-500 text-emerald-500 rounded-b-md focus:outline-none focus:ring focus-ring focus:ring-emerald-500 bg-stone-700 focus:bg-stone-600 focus:shadow-inner"
               ></textarea>
             </form>
             <div id="" class="d-flex flex-column"></div>
@@ -127,14 +134,17 @@ function dodajDone(zrobione) {
 <style scoped>
 main {
   min-height: 100vh;
-  background-color: #000000;
   overflow-x: hidden;
-  color: #000000;
+  scrollbar-width: thin;
 }
-
+main::-webkit-scrollbar {
+  width: 16px;
+}
+main::-webkit-scrollbar-track {
+  background-color: white;
+}
 #welcomeText {
   font-weight: 900;
-  color: #ffffff;
 }
 
 #welcome {
@@ -148,26 +158,19 @@ main {
   min-width: 5rem;
   min-height: 5rem;
   max-height: 25rem;
-  background-color: #ffffff;
-  color: #c04646;
 }
 .Przesuwanie {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 90%;
 }
-h1,
-h2,
-h3 {
-  color: black;
-}
+
 #NaSrodek {
   min-height: calc(100vh - 89px);
 }
 
 #done {
   min-height: calc(100vh - 89px);
-  color: black;
 }
 
 #notatnik {
@@ -176,9 +179,6 @@ h3 {
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 4rem;
-}
-#tytul {
-  height: 10%;
 }
 textarea {
   padding: 3px;
@@ -189,21 +189,9 @@ textarea {
 .day {
   min-height: 25rem;
   max-height: 25rem;
-  outline-style: solid;
-  border-width: 2px;
-  border-radius: 2px;
-  border-color: #ffffff;
-  background-color: #ffffff;
-  color: #000000;
 }
 .weekend {
   max-height: 25rem;
-  outline-style: solid;
-  border-radius: 2px;
-  border-width: 2px;
-  border-color: #000000;
-  background-color: #ffffff;
-  color: #000000;
 }
 .week {
   overflow-y: auto;

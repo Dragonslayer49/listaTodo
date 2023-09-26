@@ -49,11 +49,14 @@ function edytujItemy(index, zmien, arr) {
         </template> </draggable
       ><!--LISTA-->
 
-      <div v-if="edycja == false" class="d-flex justify-content-center">
+      <div
+        v-if="edycja == false"
+        class="d-flex justify-content-center hover:outline outline-2 hover:outline-emerald-500 rounded-md hover:text-emerald-500 hover:shadow-sm"
+      >
         <button
           type="button"
           @click="edycja = true"
-          class="plusIcon btn btn-sm done w-100"
+          class="plusIcon btn btn-sm bg-black shadow-inner w-100"
         >
           <i class="bi bi-plus-lg"></i>
         </button>
@@ -61,12 +64,14 @@ function edytujItemy(index, zmien, arr) {
       </div>
       <div v-else class="">
         <div class="w-100 d-flex justify-content-center">
-          <form @submit.prevent="dodaj(tekst)" class="">
+          <form @submit.prevent="dodaj(tekst)">
             <input
+              class="focus:ring-emerald-500"
+              id="inp"
               v-model="tekst"
               type="text"
               name="email"
-              placeholder="you@example.com"
+              placeholder=""
             />
           </form>
         </div>
@@ -101,29 +106,19 @@ function edytujItemy(index, zmien, arr) {
 </template>
 
 <style scoped>
-.cog {
-  border: 1px solid #dda15e;
-}
-.done {
-  border: 2px solid black;
-  color: white;
-  background-color: black;
-}
-.done:hover {
-  border: 2px solid #47ce77;
-  color: #dda15e;
-  background-color: #47ce77;
-}
-
 ul {
   list-style-type: none;
   text-align: start;
   padding: 1rem;
   width: 100%;
   height: 100%;
-  color: #000000;
 }
-
+#inp {
+  min-width: 20px;
+  max-width: 1000px;
+  width: calc(98%);
+  display: inline-block;
+}
 .plusIcon {
   opacity: 0;
 }
@@ -133,7 +128,6 @@ ul {
 }
 
 h3 span {
-  color: #000000;
   outline-offset: -20px;
 }
 </style>

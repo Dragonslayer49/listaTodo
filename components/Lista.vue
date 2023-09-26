@@ -36,12 +36,16 @@ function doDone() {
         <button
           type="button"
           @click="editMode = !editMode"
-          class="btn btn-sm cog"
+          class="btn btn-sm hover:text-stone-700"
         >
           <i class="bi bi-arrow-left-square"></i>
         </button>
 
-        <button type="button" @click="Edycja()" class="btn btn-sm write">
+        <button
+          type="button"
+          @click="Edycja()"
+          class="btn btn-sm write hover:text-stone-700"
+        >
           <i class="bi bi-pencil-square"> </i>
         </button>
       </div>
@@ -52,14 +56,14 @@ function doDone() {
         <button
           type="button"
           @click="editMode = !editMode"
-          class="btn btn-sm cog"
+          class="btn btn-sm hover:text-stone-700"
         >
           <i class="bi bi-arrow-left-square"></i>
         </button>
         <button
           type="button"
           @click="Edycja()"
-          class="btn btn-sm write"
+          class="btn btn-sm hover:text-stone-700"
           disabled
         >
           <i class="bi bi-pencil-square"> </i>
@@ -70,27 +74,27 @@ function doDone() {
   <div v-else>
     <div id="task" class="list-group-item p-2 d-flex flex-row">
       <li
-        class="shadow-md rounded-b-md border-t-2 border-sky-500 hover:bg-slate-900"
+        class="shadow-sm shadow-stone-500 rounded-b-md border-t-4 border-emerald-700 hover:border-emerald-500 bg-stone-800 text-stone-300 hover:text-emerald-300"
       >
         {{ napis }}
       </li>
 
-      <button
-        id="przyciskD"
-        type="button"
-        @click="emit('usun')"
-        class="btn btn-sm delete align-self-end"
-      >
-        <i class="bi bi-calendar-x-fill"> </i>
-      </button>
       <div
         v-if="przyciski == false"
-        class="d-flex flex-row justify-content-end przyciski"
+        class="d-flex flex-row justify-content-end border-2 border-emerald-500 rounded-md ml-1"
       >
+        <button
+          id="przyciskD"
+          type="button"
+          @click="emit('usun')"
+          class="btn btn-sm delete align-self-end text-stone-300 hover:text-rose-500"
+        >
+          <i class="bi bi-calendar-x-fill"> </i>
+        </button>
         <button
           type="button"
           @click="przyciski = !przyciski"
-          class="btn btn-sm cog align-self-end"
+          class="btn btn-sm cog align-self-end text-stone-300 hover:text-emerald-500"
         >
           <div
             class="md:hover:animate-spin transition duration-150 ease-in-out"
@@ -100,19 +104,30 @@ function doDone() {
         </button>
       </div>
 
-      <div v-else class="d-flex justify-content-end przyciski">
-        <button type="button" @click="editMode = true" class="btn btn-sm write">
+      <div
+        v-else
+        class="d-flex justify-content-end border-2 border-emerald-500 rounded-md ml-1"
+      >
+        <button
+          type="button"
+          @click="editMode = true"
+          class="btn btn-sm text-stone-300 hover:text-amber-400"
+        >
           <i class="bi bi-pencil-square"> </i>
         </button>
 
-        <button type="button" @click="doDone" class="btn btn-sm done">
+        <button
+          type="button"
+          @click="doDone"
+          class="btn btn-sm text-stone-300 hover:text-emerald-500"
+        >
           <i class="bi bi-clipboard-check-fill"> </i>
         </button>
         <div class="md:hover:animate-spin">
           <button
             type="button"
             @click="przyciski = !przyciski"
-            class="btn btn-sm cog"
+            class="btn btn-sm text-stone-300 hover:text-emerald-500"
           >
             <i class="bi bi-gear-fill"> </i>
           </button>
@@ -133,9 +148,6 @@ li {
   overflow: hidden;
   padding: 1px;
 }
-input[type="text"]:focus {
-  border: 3px solid #555;
-}
 #task {
   padding: 1px;
 }
@@ -144,7 +156,7 @@ input[type="text"]:focus {
   cursor: grab;
 }
 #przyciskD {
-  opacity: 0;
+  opacity: 0.5;
 }
 #przyciskD:hover {
   opacity: 1;
