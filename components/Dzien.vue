@@ -28,7 +28,7 @@ function edytujItemy(index, zmien, arr) {
 </script>
 
 <template>
-  <div id="lista" class="d-flex flex-column">
+  <div id="lista" class="d-flex flex-column h-100">
     <ul class="ulul">
       <draggable
         :list="items"
@@ -56,9 +56,9 @@ function edytujItemy(index, zmien, arr) {
         <button
           type="button"
           @click="edycja = true"
-          class="plusIcon btn btn-sm bg-black shadow-inner w-100"
+          class="plusIcon btn btn-sm bg-stone-900 transition duration-300 ease-in-out hover:transition-all shadow-inner w-100"
         >
-          <i class="bi bi-plus-lg"></i>
+          <i class="bi bi-plus-lg opacity-100"></i>
         </button>
         <!--        button edit mode plus-->
       </div>
