@@ -5,7 +5,9 @@ const emits = defineEmits(["item"]);
 </script>
 
 <template>
-  <li class="list-group-item">
+  <li
+    class="list-group-item align-self-center align-content-center justify-self-center"
+  >
     <h4>
       {{ napis }}
     </h4>

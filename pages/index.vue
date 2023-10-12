@@ -24,6 +24,7 @@ function dodajDone(zrobione) {
 
   done.dodaj(zrobione);
 }
+const OpenMenu = ref(false);
 </script>
 
 <template>
@@ -33,16 +34,21 @@ function dodajDone(zrobione) {
     <div class="d-flex flex-col mb-2">
       <button
         type="button"
-        class="text-emerald-500 text-4xl align-self-end mr-3 mt-3 position-relative"
+        @click="OpenMenu = !OpenMenu"
+        class="text-emerald-500 text-4xl align-self-end top-12 right-12 position-absolute z-10"
       >
         <i class="bi bi-list"></i>
       </button>
       <div class="d-flex">
-        <div id="welcome" class="text-4xl ml-1 text-stone-100">
+        <div id="welcome" class="text-4xl ml-1 text-primary mt-10">
           <h1 id="welcomeText">Week plan</h1>
         </div>
       </div>
     </div>
+    <div v-if="OpenMenu == true">
+      <Menu />
+    </div>
+    <div v-else></div>
 
     <div
       class="row align-self-center justify-self-center justify-content-center"
@@ -61,7 +67,7 @@ function dodajDone(zrobione) {
                   <tytul :title="day.name" />
                 </div>
                 <div
-                  class="Przesuwanie scroll-smooth hover:scroll-auto touch-auto h-100"
+                  class="Przesuwanie scroll-smooth hover:scroll-auto touch-auto"
                 >
                   <Dzien
                     :title="day.name"
@@ -152,11 +158,11 @@ function dodajDone(zrobione) {
           ></textarea>
         </form>
       </div>
-      <div class="border-t-4 border-stone-700 lowbar d-flex flex-row">
+      <div class="border-t-4 border-stone-700 d-flex flex-row">
         <div class="text-xl text-emerald-500 p-3 align-self-center">
           Natan Smołka
         </div>
-        <div class="text-stone-400 align-self-center toright">
+        <div class="text-stone-400 align-self-center ml-auto mr-2">
           <i class="bi bi-facebook p-2"></i>
           <i class="bi bi-discord p-1"></i>
           <i class="bi bi-github p-2"></i>
@@ -189,14 +195,15 @@ main::-webkit-scrollbar-track {
 #blokDone {
   min-width: 5rem;
   width: 60%;
-  min-height: 5rem;
+  min-height: 30rem;
   max-height: 60rem;
-  height: 30rem;
+  height: 20rem;
 }
 .Przesuwanie {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 90%;
+  height: 88%;
 }
 
 #NaSrodek {
@@ -211,8 +218,8 @@ main::-webkit-scrollbar-track {
 }
 textarea {
   padding: 3px;
-  width: 100%;
-  min-height: 15rem;
+  width: 20rem;
+  min-height: 20rem;
   overflow-y: auto;
 }
 textarea:focus {
@@ -230,13 +237,7 @@ textarea:focus {
   overflow-x: hidden;
   height: 40%;
 }
-.lowbar {
-  height: 4rem;
-  width: 100%;
-}
-.toright {
-  left: 5px;
-}
+
 ul {
   columns: 3 auto;
 }
